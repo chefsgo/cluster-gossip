@@ -3,6 +3,7 @@ package cluster_gossip
 import (
 	"encoding/json"
 	"errors"
+	"io"
 	"strings"
 	"sync"
 	"time"
@@ -77,7 +78,7 @@ func (connect *gossipClusterConnect) Open() error {
 	}
 	cfg.Events = connect
 	cfg.Delegate = connect
-	cfg.LogOutput = &Logger{}
+	cfg.LogOutput = io.Discard
 
 	client, err := memberlist.Create(cfg)
 	if err != nil {
