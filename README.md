@@ -1,2 +1,3 @@
 # cluster-gossip
-chefsgo gossip cluster driver.
+Chefs.go gossip cluster driver.
+
