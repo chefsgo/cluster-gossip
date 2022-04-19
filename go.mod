@@ -1,3 +1,3 @@
-module github.com/chef-go/cluster-gossip
+module github.com/chefsgo/cluster-gossip
 
 go 1.17

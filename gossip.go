@@ -1,7 +1,7 @@
 package cluster_gossip
 
 import (
-	"github.com/chef-go/chef"
+	"github.com/chefsgo/chef"
 	"github.com/hashicorp/memberlist"
 )
 

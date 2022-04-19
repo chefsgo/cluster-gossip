@@ -1,2 +1,2 @@
 # cluster-gossip
-chef-go gossip cluster driver.
+chefsgo gossip cluster driver.
