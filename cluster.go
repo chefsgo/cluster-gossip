@@ -1,7 +1,6 @@
 package cluster_gossip
 
 import (
-	"encoding/json"
 	"errors"
 	"io"
 	"strings"
@@ -137,9 +136,7 @@ func (connect *gossipClusterConnect) Read(key string) ([]byte, error) {
 func (connect *gossipClusterConnect) Write(key string, val []byte) error {
 	data := chef.ClusterData{key: val}
 
-	// 待处理，优化成框架内置的JSON方法
-	// bytes, err := chef.JsonEncode(&data)
-	bytes, err := json.Marshal(data)
+	bytes, err := chef.JSONMarshal(&data)
 	if err != nil {
 		return err
 	}
@@ -156,9 +153,7 @@ func (connect *gossipClusterConnect) Write(key string, val []byte) error {
 func (connect *gossipClusterConnect) Delete(key string) error {
 	data := chef.ClusterData{key: nil}
 
-	// 待处理，优化成框架内置的JSON方法
-	// bytes, err := chef.JsonEncode(&data)
-	bytes, err := json.Marshal(&data)
+	bytes, err := chef.JSONMarshal(&data)
 	if err != nil {
 		return err
 	}
@@ -183,9 +178,7 @@ func (connect *gossipClusterConnect) Clear(prefix string) error {
 		}
 	}
 
-	// 待处理，优化成框架内置的JSON方法
-	// bytes, err := chef.JsonEncode(&data)
-	bytes, err := json.Marshal(&data)
+	bytes, err := chef.JSONMarshal(&data)
 	if err != nil {
 		return err
 	}
@@ -200,9 +193,7 @@ func (connect *gossipClusterConnect) Clear(prefix string) error {
 }
 
 func (connect *gossipClusterConnect) Batch(data chef.ClusterData) error {
-	//待处理
-	// bytes, err := chef.JsonEncode(&data)
-	bytes, err := json.Marshal(&data)
+	bytes, err := chef.JSONMarshal(&data)
 	if err != nil {
 		return err
 	}
@@ -285,9 +276,7 @@ func (connect *gossipClusterConnect) NotifyMsg(b []byte) {
 	}
 
 	var data chef.ClusterData
-	//待处理，优化成统一的JSON方法
-	// if err := chef.JsonDecode(b, &data); err != nil {
-	if err := json.Unmarshal(b, &data); err != nil {
+	if err := chef.JSONUnmarshal(b, &data); err != nil {
 		return
 	}
 
@@ -309,9 +298,7 @@ func (connect *gossipClusterConnect) LocalState(join bool) []byte {
 	connect.mutex.RLock()
 	defer connect.mutex.RUnlock()
 
-	//待处理
-	// bytes, _ := chef.JsonEncode(data)
-	bytes, err := json.Marshal(connect.data)
+	bytes, err := chef.JSONMarshal(connect.data)
 	if err != nil {
 		return []byte{}
 	}
